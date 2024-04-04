@@ -4,6 +4,6 @@ module hazarddetection (
     output enable_stall;
 );
 
-assign enable_stall = (ID/EX_MemRead & (ID/EX_RegisterRd != 4'b0000) & ((ID/EX_RegisterRd == IF/ID_RegisterRs) | ((ID/EX_RegisterRd == IF/ID_RegisterRt) & (!IF/ID_MemWrite))));
+assign enable_stall = (ID/EX_MemRead & (ID/EX_RegisterRd != 4'b0000) & ((ID/EX_RegisterRd == IF/ID_RegisterRs) | ((ID/EX_RegisterRd == IF/ID_RegisterRt) & (~IF/ID_MemWrite))));
 
 endmodule
