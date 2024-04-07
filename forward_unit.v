@@ -1,9 +1,9 @@
 module forwardunit (
-    input EX_MEM_Regwrite, MEM_WB_Regwrite;
-    input [3:0] EX_MEM_RegisterRd, ID_EX_RegisterRs,  ID_EX_RegisterRt, MEM_WB_RegisterRd, EX_MEM_RegisterRt; 
-    output [1:0] ForwardA;
-    output [1:0] ForwardB;
-    output ForwardMem;
+    input EX_MEM_Regwrite, MEM_WB_Regwrite,
+    input [3:0] EX_MEM_RegisterRd, ID_EX_RegisterRs,  ID_EX_RegisterRt, MEM_WB_RegisterRd, EX_MEM_RegisterRt,
+    output [1:0] ForwardA,
+    output [1:0] ForwardB,
+    output ForwardMem
 );
 
 //Wires
@@ -20,7 +20,7 @@ assign MEM_EX_S2 = (MEM_WB_Regwrite) && (EX_EX_S2 != 1'b1) && (MEM_WB_RegisterRd
 
 //Assigning ForwardA and B
 assign ForwardA = (EX_EX_S1) ? 2'b10 : (MEM_EX_S1) ? 2'b01 : 2'b00;
-assign ForwardB = (EX_oEX_S2) ? 2'b10 : (MEM_EX_S2) ? 2'b01 : 2'b00;
+assign ForwardB = (EX_EX_S2) ? 2'b10 : (MEM_EX_S2) ? 2'b01 : 2'b00;
 
 /// MEM-MEM Forwarding
 assign ForwardMem = MEM_WB_Regwrite && (MEM_WB_RegisterRd != 4'b0000) && (MEM_WB_RegisterRd == EX_MEM_RegisterRt);
