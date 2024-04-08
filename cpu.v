@@ -122,14 +122,14 @@ EX_MEM_PipelineReg exmempipline(.clk(clk), .rst(~rst_n), .MemWrite(ID_MemWrite),
 
 
 ////////////////////////////////////////////Memory Stage////////////////////////////////////////////
-memory1c mem(.data_out(memDataOut), .data_in(EX_DataIn), .addr(EX_address), .enable(EX_MemRead | EX_MemWrite), .wr(EX_MemWrite), .clk(clk), .rst(~rst_n));
+wire [15:0] forward_Mem_Data = (ForwardMem) ? DstData : EX_DataIn;
+memory1c mem(.data_out(memDataOut), .data_in(forward_Mem_Data), .addr(EX_address), .enable(EX_MemRead | EX_MemWrite), .wr(EX_MemWrite), .clk(clk), .rst(~rst_n));
 
 MEM_WB_PipelineReg memwbpipeline(.clk(clk), .rst(~rst_n), .PCS(EX_PCS), .MemtoReg(EX_MemtoReg), .Prev_MemData(memDataOut), .PC(EX_PC), .HLT(EX_HLT), .Instruction(EX_Instruction),
                                 .Prev_AluOut(EX_ALU_Out), .WriteReg(EX_WriteReg), .Curr_Memdata(MEM_DataOut), .Curr_AluOut(MEM_AluOut), 
                                 .prop_MemtoReg(MEM_MemtoReg), .prop_PCS(MEM_PCS), .PC_out(MEM_PC), .WriteReg_Out(MEM_WriteReg), .HLT_Out(MEM_HLT), .Instruction_out(MEM_Instruction));
 
 /////////////////////////////////WriteBack/////////////////////////////////////
-
 assign DstData = (MEM_PCS) ? MEM_PC : 
                  (MEM_MemtoReg) ? MEM_DataOut : 
                   MEM_AluOut;
