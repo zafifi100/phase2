@@ -49,7 +49,7 @@ assign branch_addr = (BR) ? ReadData1 : next_pc;
 assign pc = curr_pc;
 
 // PC REG
-PC_reg pcReg(.clk(clk), .rst(~rst_n), .D(branch_addr), .eanble_stall((&instr[15:12] & ~Flush) | enable_stall), .q(curr_pc));
+PC_reg pcReg(.clk(clk), .rst(~rst_n), .D(branch_addr), .eanble_stall(&instr[15:12] | enable_stall), .q(curr_pc));
 
 // MEM FETCH
 memory1c fetch(.data_out(instr), .data_in(16'h0000), .addr(curr_pc), .enable(1'b1), .wr(1'b0), .clk(clk), .rst(~rst_n));

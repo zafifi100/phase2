@@ -5,7 +5,7 @@ module PC_reg(
     output [15:0] q
 );
 
-dff ff[15:0](.q(q), .d(D), .wen(~enable_stall), .clk(clk), .rst(rst));
+dff ff[15:0](.q(q), .d(D), .wen(enable_stall), .clk(clk), .rst(rst));
 
 endmodule
 

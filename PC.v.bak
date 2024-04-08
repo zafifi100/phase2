@@ -32,7 +32,6 @@ module PC_control(
     end
 
     assign PC_out = target;
-    assign Flush = (target == ntaken) ? 1'b0 : 1'b1;
 
 endmodule
 

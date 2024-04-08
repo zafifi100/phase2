@@ -11,11 +11,11 @@ module MEM_WB_PipelineReg(
 );
 
   dff_16 readdata_ff(.q(Curr_Memdata), .d(Prev_MemData), .clk(clk), .rst(rst), .wen(1'b1));
-  dff_16 aluout_ff(.q(Curr_AluOut), .d(Prev_AluOut), .clk(clk), .rst(rst), .wen(1'b1));
+  dff_16 aluout_ff(.q(Curr_AluOut), .d(Prev_AluOut), .clk(clk), .rst(rst), .wen(1'b1))
   dff memtoreg_ff(.q(prop_MemtoReg), .d(MemtoReg), .clk(clk), .rst(rst), .wen(1'b1));
   dff_16 pc_ff(.q(PC_out), .d(PC), .clk(clk), .rst(rst), .wen(enable_stall));
   dff pcs_ff(.q(prop_PCS), .d(PCS), .clk(clk), .rst(rst), .wen(1'b1));
-  dff regwrite_ff(.q(WriteReg_Out), .d(WriteReg), .clk(clk), .rst(rst), .wen(1'b1));
+  dff pcs_ff(.q(WriteReg_Out), .d(WriteReg), .clk(clk), .rst(rst), .wen(1'b1));
   dff hlt_ff(.q(HLT_Out), .d(HLT), .clk(clk), .rst(rst), .wen(1'b1));
   dff_16 instructionff(.q(Instuction_Out), .d(Instruction), .clk(clk), .rst(rst), .wen(1'b1));
 

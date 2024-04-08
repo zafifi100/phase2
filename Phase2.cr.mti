@@ -1,0 +1,250 @@
+/filespace/r/rsenthilkuma/ece552/Phase2/add.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/add.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module add
+
+Top level modules:
+	add
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/D-Flip-Flop16.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/D-Flip-Flop16.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module dff_16
+
+Top level modules:
+	dff_16
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/MEM_WB_PipelineReg.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/MEM_WB_PipelineReg.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module MEM_WB_PipelineReg
+
+Top level modules:
+	MEM_WB_PipelineReg
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/WriteDecoder_4_16.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/WriteDecoder_4_16.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module WriteDecoder_4_16
+
+Top level modules:
+	WriteDecoder_4_16
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/D-Flip-Flop.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/D-Flip-Flop.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module dff
+
+Top level modules:
+	dff
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/PC.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/PC.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module PC_control
+
+Top level modules:
+	PC_control
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/SLL.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/SLL.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module sll
+
+Top level modules:
+	sll
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/ROR.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/ROR.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module ROR
+
+Top level modules:
+	ROR
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/ReadDecoder_4_16.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/ReadDecoder_4_16.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module ReadDecoder_4_16
+
+Top level modules:
+	ReadDecoder_4_16
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/addsub.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/addsub.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module cla_4bit
+-- Compiling module cla_16bit
+
+Top level modules:
+	cla_16bit
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/Shifter.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/Shifter.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module Shifter
+
+Top level modules:
+	Shifter
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/paddsb.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/paddsb.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module full_adder_1bit
+-- Compiling module addsub_4bit
+-- Compiling module paddsb_16bit
+
+Top level modules:
+	paddsb_16bit
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/EX_MEM_PipelineReg.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/EX_MEM_PipelineReg.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module EX_MEM_PipelineReg
+
+Top level modules:
+	EX_MEM_PipelineReg
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/BitCell.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/BitCell.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module BitCell
+
+Top level modules:
+	BitCell
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/hazard_detection.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/hazard_detection.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module hazarddetection
+
+Top level modules:
+	hazarddetection
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/control.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/control.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module control
+
+Top level modules:
+	control
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/full_adder_1bit.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/full_adder_1bit.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module full_adder_1bit
+
+Top level modules:
+	full_adder_1bit
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/memory.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/memory.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module memory1c
+
+Top level modules:
+	memory1c
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/PSA_16bit.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/PSA_16bit.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module PSA_16bit
+
+Top level modules:
+	PSA_16bit
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/xor.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/xor.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module xor_16bit
+
+Top level modules:
+	xor_16bit
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/ALU.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/ALU.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module ALU
+
+Top level modules:
+	ALU
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/red.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/red.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module cla_4bit
+-- Compiling module red_16bit
+
+Top level modules:
+	red_16bit
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/D-Flip-Flop2.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/D-Flip-Flop2.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module dff_2
+
+Top level modules:
+	dff_2
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/forward_unit.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/forward_unit.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module forwardunit
+
+Top level modules:
+	forwardunit
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/ID_EX_PipelineReg.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/ID_EX_PipelineReg.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module ID_EX_PipelineReg
+
+Top level modules:
+	ID_EX_PipelineReg
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/D-Flip-Flop3.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/D-Flip-Flop3.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module dff_3
+
+Top level modules:
+	dff_3
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/Register.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/Register.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module Register
+
+Top level modules:
+	Register
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/RegisterFile.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/RegisterFile.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module RegisterFile
+
+Top level modules:
+	RegisterFile
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/D-Flip-Flop4.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/D-Flip-Flop4.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module dff_4
+
+Top level modules:
+	dff_4
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/SRA.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/SRA.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module sra
+
+Top level modules:
+	sra
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/IF_ID_PipelineReg.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/IF_ID_PipelineReg.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module IF_ID_PipelineReg
+
+Top level modules:
+	IF_ID_PipelineReg
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/project-phase2-testbench/project-phase2-testbench.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/project-phase2-testbench/project-phase2-testbench.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module cpu_ptb
+
+Top level modules:
+	cpu_ptb
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/FlagRegister.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/FlagRegister.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module flag_register
+
+Top level modules:
+	flag_register
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/PC_reg.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/PC_reg.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module PC_reg
+
+Top level modules:
+	PC_reg
+
+} {} {}} /filespace/r/rsenthilkuma/ece552/Phase2/cpu.v {1 {vlog -work work -vopt -stats=none /filespace/r/rsenthilkuma/ece552/Phase2/cpu.v
+QuestaSim vlog 2023.2_1 Compiler 2023.05 May 12 2023
+-- Compiling module cpu
+
+Top level modules:
+	cpu
+
+} {} {}}

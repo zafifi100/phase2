@@ -20,7 +20,7 @@ dff pcsff(.q(PCS_out), .d(PCS), .clk(clk), .rst(rst), .wen(1'b1));
 dff memtoregff(.q(MemtoReg_out), .d(MemtoReg), .clk(clk), .rst(rst), .wen(1'b1));
 dff memreadff(.q(MemRead_out), .d(MemRead), .clk(clk), .rst(rst), .wen(1'b1));
 dff memwriteff(.q(MemWrite_out), .d(MemWrite), .clk(clk), .rst(rst), .wen(1'b1));
-dff hltff(.q(HLT_out), .d(HLT), .clk(clk), .rst(rst), .wen(1'b1));
+dff hltff(.q(HLT_out), .d(HLT), .clk(clk), .rst(rst), .wen(1'b1))
 
 dff_16 readdata1ff(.q(ReadData1_out), .d(ReadData1), .clk(clk), .rst(rst), .wen(1'b1));
 dff_16 readdata2ff(.q(ReadData2_out), .d(ReadData2), .clk(clk), .rst(rst), .wen(1'b1));
