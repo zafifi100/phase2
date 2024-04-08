@@ -28,7 +28,7 @@ wire [1:0] ID_AluSrc1, ID_AluSrc2;
 wire [3:0] ID_AluOp;
 wire [15:0] ID_ReadData1, ID_ReadData2, ID_Instruction, ID_PC;
 wire [15:0] imm_sign;
-wire [15:0] address;
+wire [15:0] address, EX_address;
 wire [15:0] EX_ALU_Out, EX_DataIn;
 wire [15:0] ReadData1, ReadData2;
 
@@ -53,13 +53,12 @@ PC_reg pcReg(.clk(clk), .rst(~rst_n), .D(branch_addr), .eanble_stall((&instr[15:
 
 // MEM FETCH
 memory1c fetch(.data_out(instr), .data_in(16'h0000), .addr(curr_pc), .enable(1'b1), .wr(1'b0), .clk(clk), .rst(~rst_n));
-assign Opcode = instr[15:12];
 
 //PC inc
 add ntakenadd(.Sum(ntaken), .Ovfl(ov), .A(curr_pc), .B(16'h0002), .sub(1'b0));
 
 // FLAG REG
-flag_register flag_reg(.clk(clk), .rst(~rst_n), .en(~Opcode[3]), .D(flags), .q(ccc));
+flag_register flag_reg(.clk(clk), .rst(~rst_n), .en(~instr[15]), .D(flags), .q(ccc));
 
 // IF/ID Pipeline
 IF_ID_PipelineReg ifidpipeline(.clk(clk), .rst(~rst_n), .enable_stall(enable_stall), .pc(ntaken), .instr(instr), .pc_out(IF_PC), .instr_out(IF_instr));
@@ -67,11 +66,10 @@ IF_ID_PipelineReg ifidpipeline(.clk(clk), .rst(~rst_n), .enable_stall(enable_sta
 
 
 /////////////////////////////////////////////////////// Instruction Decode ///////////////////////////////////////////////////////
-assign Opcode = IF_instr[15:12];
-control control1(.Opcode(Opcode), .ReadIn(ReadIn), .WriteReg(WriteReg), .PCS(PCS), .AluSrc1(AluSrc1), .AluSrc2(AluSrc2), .MemtoReg(MemtoReg), .MemRead(MemRead), .MemWrite(MemWrite), .B(B), .BR(BR), .HLT(HLT), .AluOp(AluOp), .Error(Error));
+control control1(.Opcode(IF_instr[15:12]), .ReadIn(ReadIn), .WriteReg(WriteReg), .PCS(PCS), .AluSrc1(AluSrc1), .AluSrc2(AluSrc2), .MemtoReg(MemtoReg), .MemRead(MemRead), .MemWrite(MemWrite), .B(B), .BR(BR), .HLT(HLT), .AluOp(AluOp), .Error(Error));
 
-assign ReadRegister1 = (ReadIn | MemWrite | MemRead) ? IF_instr[11:8] : IF_instr[7:4];
-assign ReadRegister2 = (MemRead | MemWrite) ? IF_instr[7:4] : IF_instr[3:0];
+assign ReadRegister1 = (ReadIn | MemWrite | MemRead) ? IF_instr[11:8] : IF_instr[7:4]; ////Rs
+assign ReadRegister2 = (MemRead | MemWrite) ? IF_instr[7:4] : IF_instr[3:0]; ///Rt
 assign DstReg = MEM_Instruction[11:8];
 
 RegisterFile regfile(.clk(clk), .rst(~rst_n), .SrcReg1(ReadRegister1), .SrcReg2(ReadRegister2), .DstReg(DstReg), .WriteReg(MEM_WriteReg), .DstData(DstData), .SrcData1(ReadData1), .SrcData2(ReadData2));
@@ -92,6 +90,7 @@ ID_EX_PipelineReg idexpipeline(.clk(clk), .rst(!rst_n), .ReadIn(ReadIn), .HLT(HL
 
 
 ////////////////////////////////////////////Execution Stage////////////////////////////////////////////
+wire [15:0] forward_ALU_IN1, forward_ALU_IN2;
 assign imm_sign = {{12{ID_Instruction[3]}}, ID_Instruction[3:0]} << 1;
 add add01(.Sum(address), .Ovfl(), .A(ID_ReadData2 & 16'hFFFE), .B(imm_sign), .sub(1'b0));
 
@@ -108,19 +107,22 @@ assign ALU_In2 = (ID_AluSrc2 === 2'b00) ? ID_ReadData2 :
 assign LHBorLLB = ALU_In1 | ALU_In2;
 wire [15:0] temp_alu_out;
 
-ALU alu(.ALU_In1(ALU_In1), .ALU_In2(ALU_In2), .Opcode(ID_AluOp), .ALU_Out(temp_alu_out), .flags(flags));
+assign forward_ALU_IN1 = (ForwardA === 2'b10) ? EX_ALU_Out : (ForwardA === 2'b01) ? DstData : ALU_In1;
+assign forward_ALU_IN2 = (ForwardB === 2'b10) ? EX_ALU_Out : (ForwardB === 2'b01) ? DstData : ALU_In2;
 
-assign AluOut = (ReadIn) ? LHBorLLB : temp_alu_out;
+ALU alu(.ALU_In1(forward_ALU_IN1), .ALU_In2(forward_ALU_IN2), .Opcode(ID_AluOp), .ALU_Out(temp_alu_out), .flags(flags));
+
+assign AluOut = (ID_Read_In) ? LHBorLLB : temp_alu_out;
 
 
-EX_MEM_PipelineReg exmempipline(.clk(clk), .rst(~rst_n), .MemWrite(ID_MemWrite), .MemRead(ID_MemRead), .MemtoReg(ID_MemtoReg), .HLT(ID_HLT), .Instruction(ID_Instruction),
+EX_MEM_PipelineReg exmempipline(.clk(clk), .rst(~rst_n), .MemWrite(ID_MemWrite), .MemRead(ID_MemRead), .MemtoReg(ID_MemtoReg), .HLT(ID_HLT), .Instruction(ID_Instruction), .Address(address), .Address_out(EX_address)
                            .PCS(ID_PCS), .PC(ID_PC), .WriteReg(ID_WriteReg), .Prev_ALU_Out(AluOut), .DataIn(ID_ReadData1), .Curr_ALU_Out(EX_ALU_Out), .WriteData(EX_DataIn), .prop_MemWrite(EX_MemWrite), 
                            .prop_MemRead(EX_MemRead), .prop_MemtoReg(EX_MemtoReg), .prop_PCS(EX_PCS), .PC_out(EX_PC), .WriteReg_Out(EX_WriteReg), .HLT_Out(EX_HLT), .Instruction_out(EX_Instruction));
 
 
 
 ////////////////////////////////////////////Memory Stage////////////////////////////////////////////
-memory1c mem(.data_out(memDataOut), .data_in(EX_DataIn), .addr(address), .enable(EX_MemRead | EX_MemWrite), .wr(EX_MemWrite), .clk(clk), .rst(~rst_n));
+memory1c mem(.data_out(memDataOut), .data_in(EX_DataIn), .addr(EX_address), .enable(EX_MemRead | EX_MemWrite), .wr(EX_MemWrite), .clk(clk), .rst(~rst_n));
 
 MEM_WB_PipelineReg memwbpipeline(.clk(clk), .rst(~rst_n), .PCS(EX_PCS), .MemtoReg(EX_MemtoReg), .Prev_MemData(memDataOut), .PC(EX_PC), .HLT(EX_HLT), .Instruction(EX_Instruction),
                                 .Prev_AluOut(EX_ALU_Out), .WriteReg(EX_WriteReg), .Curr_Memdata(MEM_DataOut), .Curr_AluOut(MEM_AluOut), 
