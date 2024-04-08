@@ -44,7 +44,7 @@ wire [2:0] ccc;
 wire ID_ReadIn, ID_WriteReg, ID_PCS, ID_MemtoReg, ID_MemRead, ID_MemWrite;
 wire [1:0] ID_AluSrc1, ID_AluSrc2;
 wire [3:0] ID_AluOp;
-wire [15:0] ID_ReadData1, ID_ReadData2, ID_Instruction;
+wire [15:0] ID_ReadData1, ID_ReadData2, ID_Instruction, ID_PC;
 
 
 assign Opcode = IF_instr[15:12];
@@ -61,19 +61,23 @@ hazarddetection hazarddect(.ID_EX_MemRead(ID_MemRead), .IF_ID_MemWrite(MemWrite)
 
 
 //PC CONTROL
-PC_control pc_log(.C(instr[11:9]), .I(instr[8:0]), .F(ccc), .PC_in(curr_pc), .PC_out(PC_out));
+PC_control pc_log(.C(instr[11:9]), .I(instr[8:0]), .F(ccc), .PC_in(IF_PC), .PC_out(PC_out));
 
 
 ID_EX_PipelineReg idexpipeline(.clk(clk), .rst(!rst_n), .ReadIn(ReadIn), .WriteReg(WriteReg), .PCS(PCS), .MemtoReg(MemtoReg), .MemRead(MemRead), .MemWrite(MemWrite),
-                   .AluSrc1(AluSrc1), .AluSrc2(AluSrc2), AluOp(AluOp), .ReadData1(ReadData1), .ReadData2(ReadData2), .Instruction(IF_instr), 
+                   .AluSrc1(AluSrc1), .AluSrc2(AluSrc2), AluOp(AluOp), .ReadData1(ReadData1), .ReadData2(ReadData2), .Instruction(IF_instr), .PC(IF_PC)
 		           .ReadIn_out(ID_Read_In), .WriteReg_out(ID_WriteReg), .PCS_out(ID_PCS), .MemtoReg_out(ID_MemtoReg), .MemRead_out(ID_MemRead), 
                    .MemWrite_out(ID_MemWrite), .AluSrc1_out(ID_AluSrc1), .AluSrc2_out(ID_AluSrc2),
-                   .AluOp_out(ID_AluOp), .ReadData1_out(ID_ReadData1), .ReadData2_out(ID_ReadData2), .Instruction_out(ID_Instruction));
+                   .AluOp_out(ID_AluOp), .ReadData1_out(ID_ReadData1), .ReadData2_out(ID_ReadData2), .Instruction_out(ID_Instruction), .PC_out(ID_PC));
 
 
 ////////////////////////////////////////////Execution Stage////////////////////////////////////////////
 wire [15:0] imm_sign;
-wire [15:0] address;   
+wire [15:0] address;
+wire [15:0] EX_ALU_Out, EX_DataIn;
+wire EX_MemWrite, EX_MemRead, EX_MemtoReg, EX_PCS;
+wire [15:0] EX_PC;
+
 assign imm_sign = {{12{ID_Instruction[3]}}, ID_Instruction[3:0]} << 1;
 add add01(.Sum(address), .Ovfl(), .A(ID_ReadData2 & 16'hFFFE), .B(imm_sign), .sub(1'b0));
 
@@ -94,15 +98,37 @@ ALU alu(.ALU_In1(ALU_In1), .ALU_In2(ALU_In2), .Opcode(ID_AluOp), .ALU_Out(temp_a
 
 assign AluOut = (ReadIn) ? LHBorLLB : temp_alu_out;
 
-module EX_MEM_PipelineReg(.clk(clk), .rst(~rst_n), .MemWrite(), .MemRead(), .MemtoReg(), 
-                           .PCS(), .Prev_ALU_Out(), DataIn(), Curr_ALU_Out(), WriteData(), prop_MemWrite(), 
-                           .prop_MemRead(), .prop_MemtoReg(), .prop_PCS());
+
+EX_MEM_PipelineReg exmempipline(.clk(clk), .rst(~rst_n), .MemWrite(ID_MemWrite), .MemRead(ID_MemRead), .MemtoReg(ID_MemtoReg), 
+                           .PCS(ID_PCS), .PC(ID_PC), .Prev_ALU_Out(AluOut), DataIn(ID_ReadData1), .Curr_ALU_Out(EX_ALU_Out), .WriteData(EX_DataIn), .prop_MemWrite(EX_MemWrite), 
+                           .prop_MemRead(EX_MemRead), .prop_MemtoReg(EX_MemtoReg), .prop_PCS(EX_PCS), .PC_out(EX_PC));
 
 
 
 
+////////////////////////////////////////////Memory Stage////////////////////////////////////////////
+wire [15:0] MEM_DataOut;
+wire [15:0] MEM_AluOut;
+wire [15:0] memDataOut;
+wire [15:0] MEM_PC;
+wire MEM_MemtoReg, MEM_PCS;
+
+memory1c mem(.data_out(memDataOut), .data_in(EX_DataIn), .addr(address), .enable(EX_MemRead | EX_MemWrite), .wr(EX_MemWrite), .clk(clk), .rst(~rst_n));
+
+EX_MEM_PipelineReg exmempipline(.clk(clk), .rst(~rst), .PCS(EX_PCS), .MemtoReg(EX_MemtoReg), .Prev_MemData(memDataOut), .PC(EX_PC)
+                                .Prev_AluOut(EX_ALU_Out), .Curr_Memdata(MEM_DataOut), .Curr_AluOut(MEM_AluOut), 
+                                .prop_MemtoReg(MEM_MemtoReg), .prop_PCS(MEM_PCS), .PC_out(MEM_PC));
+
+/////////////////////////////////WriteBack/////////////////////////////////////
+
+assign DstData = (MEM_PCS) ? MEM_PC : 
+                 (MEM_MemtoReg) ? MEM_DataOut : 
+                  MEM_AluOut;
 
 
+assign hlt = HLT;
+
+forwardunit fu(EX_MEM_Regwrite, MEM_WB_Regwrite, EX_MEM_RegisterRd, ID_EX_RegisterRs,  ID_EX_RegisterRt, MEM_WB_RegisterRd, EX_MEM_RegisterRt, ForwardA, ForwardB, ForwardMem);
 
 
 
